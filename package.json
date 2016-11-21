@@ -1,0 +1,29 @@
+{
+  "name": "compiler-design",
+  "version": "0.0.1",
+  "description": "a simple code parser",
+  "main": "exprEvaluator.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "jison": "^0.4.17"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GaneshSPatil/compiler-design.git"
+  },
+  "author": "Ganesh Patil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GaneshSPatil/compiler-design/issues"
+  },
+  "homepage": "https://github.com/GaneshSPatil/compiler-design#readme"
+}
