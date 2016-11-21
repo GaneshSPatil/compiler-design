@@ -23,6 +23,11 @@
 /lex
 %{
   allTrees = [];
+  var path = require('path');
+  var nodeGenerators = require(path.resolve('./lib/NodeGenerator.js')).nodeGenerators;
+  var NumberNode = nodeGenerators.NumberNode;
+  var OperatorNode = nodeGenerators.OperatorNode;
+  var AssignmentNode = nodeGenerators.AssignmentNode;
 %}
 
 /* operator associations and precedence */
@@ -52,20 +57,22 @@ block
 
 assgn
   :'VARIABLE' '=' e
-    {$$ = {op: $2, args:[$1, $3]};}
+    {$$ = new AssignmentNode($2, [$1, $3]);}
   ;
 
 e
-    : e '/' e || e '+' e
-      {$$ = {op: $2, args:[$1, $3]};}
+    : e '/' e
+      {$$ = new OperatorNode($2, [$1, $3]);}
+    | e '+' e
+      {$$ = new OperatorNode($2, [$1, $3]);}
     | e '-' e
-      {$$ = {op: $2, args:[$1, $3]};}
+      {$$ = new OperatorNode($2, [$1, $3]);}
     | e '*' e
-      {$$ = {op: $2, args:[$1, $3]};}
+      {$$ = new OperatorNode($2, [$1, $3]);}
     | '(' e ')'
         {$$ = $2;}
     | 'NUMBER'
-        {$$ = Number(yytext);}
+        {$$ = new NumberNode(yytext);}
     | 'VARIABLE'
         {$$ = yytext;}
     ;
