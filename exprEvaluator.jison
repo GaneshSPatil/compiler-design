@@ -24,10 +24,9 @@
 %{
   allTrees = [];
   var path = require('path');
-  var nodeGenerators = require(path.resolve('./lib/NodeGenerator.js')).nodeGenerators;
-  var NumberNode = nodeGenerators.NumberNode;
-  var OperatorNode = nodeGenerators.OperatorNode;
-  var AssignmentNode = nodeGenerators.AssignmentNode;
+  var NumberNode = require(path.resolve('./lib/Nodes/NumericNode.js'));
+  var OperatorNode = require(path.resolve('./lib/Nodes/OperatorNode.js'));
+  var AssignmentNode = require(path.resolve('./lib/Nodes/AssignmentNode.js'));
 %}
 
 /* operator associations and precedence */
