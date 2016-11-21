@@ -21,12 +21,8 @@
 .                     return 'INVALID'
 
 /lex
-
 %{
-  var evaluate = require('./evaluate.js');
-  var toString = require('./treeToString.js');
-
-    var allTrees = [];
+  allTrees = [];
 %}
 
 /* operator associations and precedence */
@@ -40,15 +36,7 @@
 expressions
     : block EOF
         {
-          console.log(allTrees);
-          var variables = {};
-          var result;
-          allTrees.forEach(function(tree){
-            result = evaluate(tree, variables);
-          });
-          console.log(result);
-          console.log('-------------------');
-          console.log(allTrees);
+          return $$;
         }
     ;
 block
