@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var Parser = require("jison").Parser;
 var fs = require('fs');
-var representExpr = require('../lib/treeToString.js');
+var representExpr = require('../lib/expressionRepresenter.js');
 
 var grammar = fs.readFileSync('./exprEvaluator.jison', 'utf8');
 var parser = new Parser(grammar);
