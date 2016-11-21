@@ -1,7 +1,7 @@
-var walk = function(trees, reducer){
+var walk = function(trees, key){
   var variables = {};
   var result = trees.reduce(function(resultHolder, tree){
-    resultHolder.push(reducer(tree, variables));
+    resultHolder.push(tree[key](variables));
     return resultHolder;
   }, []);
   return result;
