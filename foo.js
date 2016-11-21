@@ -7,7 +7,8 @@ var fs = require('fs');
 var grammar = fs.readFileSync('./exprEvaluator.jison', 'utf8');
 
 var parser = new Parser(grammar);
-var trees = parser.parse('1+2;');
+var trees = parser.parse(process.argv[2]);
 
-// console.log(evaluateExpr(trees));
+
 console.log(buildTree(trees));
+console.log(evaluateExpr(trees));
