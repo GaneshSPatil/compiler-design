@@ -26,6 +26,11 @@ describe('Build Tree', function(){
     expect(evaluateExpr(expr, {})).to.equal(0.5);
   });
 
+  it('should evaluate a multiplication expression', function(){
+    var expr = {op:'*', args:[1, 2]};
+    expect(evaluateExpr(expr, {})).to.equal(2);
+  });
+
   it.skip('should evaluate a factorial', function(){
   });
 
