@@ -12,7 +12,7 @@ describe('NumericNode', function(){
     expect(two.args).to.eql([]);
   });
 
-  it.skip('type should be number', function(){
+  it('type should be number', function(){
     var two = new NumericNode(2);
     expect(two.type).to.equal('Number');
   });

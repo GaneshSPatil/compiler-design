@@ -11,6 +11,11 @@ describe('AssignmentNode', function(){
     expect(expr.value).to.equal('=');
   });
 
+  it('should have Assignment as type', function(){
+    var expr = new AssignmentNode('=', ['a', new NumberNode(2)]);
+    expect(expr.type).to.equal('Assignment');
+  });
+
   it('should convert variable into VariableNode', function(){
     var expr = new AssignmentNode('=', ['a', new NumberNode(2)]);
     expect(expr.args[0] instanceof VariableNode).to.equal(true);
