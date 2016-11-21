@@ -52,16 +52,16 @@ block
 
 assgn
   :'VARIABLE' '=' e
-    {$$ = {op: $2, left:$1, right:$3};}
+    {$$ = {op: $2, args:[$1, $3]};}
   ;
 
 e
     : e '/' e || e '+' e
-      {$$ = {op: $2, left:$1, right:$3};}
+      {$$ = {op: $2, args:[$1, $3]};}
     | e '-' e
-      {$$ = {op: $2, left:$1, right:$3};}
+      {$$ = {op: $2, args:[$1, $3]};}
     | e '*' e
-      {$$ = {op: $2, left:$1, right:$3};}
+      {$$ = {op: $2, args:[$1, $3]};}
     | '(' e ')'
         {$$ = $2;}
     | 'NUMBER'
