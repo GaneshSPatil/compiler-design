@@ -1,10 +1,24 @@
+var isFactorial = function(node){
+  if(node.type == 'Factorial'){
+    return true;
+  }
+  if(node.args.length == 0){
+    return false;
+  }
+  return node.args.some(function(n){
+    return isFactorial(n);
+  });
+};
+
 var walk = function(trees, key){
   var variables = {};
   var result = trees.reduce(function(resultHolder, tree){
     var value = tree[key](variables);
-    if(tree.type == 'Factorial'){
+    if(isFactorial(tree)){
       var factFn = 'var factorial = function(num){ if(num == 1){ return num;} return num*factorial(num-1);};'
-      resultHolder.unshift(factFn);
+      if(resultHolder[0] != factFn){
+        resultHolder.unshift(factFn);
+      }
     }
     if(tree.type != 'Assignment'){
       value = 'console.log('+value+');'
