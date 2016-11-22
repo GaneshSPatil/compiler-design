@@ -12,6 +12,7 @@
 "+"                   return '+'
 "-"                   return '-'
 "*"                   return '*'
+"^"                   return '^'
 "/"                   return '/'
 "("                   return '('
 ")"                   return ')'
@@ -34,6 +35,8 @@
 
 %left '+' '-'
 %left '*' '/'
+%left '^'
+%left '!'
 
 %start expressions
 
@@ -68,6 +71,8 @@ e
     | e '-' e
       {$$ = new OperatorNode($2, [$1, $3]);}
     | e '*' e
+      {$$ = new OperatorNode($2, [$1, $3]);}
+    | e '^' e
       {$$ = new OperatorNode($2, [$1, $3]);}
     | '(' e ')'
         {$$ = $2;}

@@ -26,6 +26,11 @@ describe('OperatorNode', function(){
     expect(expr.value).to.equal('/');
   });
 
+  it('should have carrot operator as value', function(){
+    var expr = new OperatorNode('^', [new NumberNode(1), new NumberNode(2)]);
+    expect(expr.value).to.equal('^');
+  });
+
   it('should have Operation as type', function(){
     var expr = new OperatorNode('+', [new NumberNode(1), new NumberNode(2)]);
     expect(expr.type).to.equal('Operation');
@@ -49,6 +54,11 @@ describe('OperatorNode', function(){
   it('should evaluate the division expression', function(){
     var expr = new OperatorNode('/', [new NumberNode(1), new NumberNode(2)]);
     expect(expr.evaluate({}).evaluate()).to.eql(0.5);
+  });
+
+  it('should evaluate the power of expression', function(){
+    var expr = new OperatorNode('^', [new NumberNode(2), new NumberNode(3)]);
+    expect(expr.evaluate({}).evaluate()).to.eql(8);
   });
 
   it('should look up for a variable in variable pool', function(){
