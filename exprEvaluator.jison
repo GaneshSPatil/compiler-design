@@ -13,6 +13,7 @@
 "-"                   return '-'
 "*"                   return '*'
 "^"                   return '^'
+"!"                   return '!'
 "/"                   return '/'
 "("                   return '('
 ")"                   return ')'
@@ -29,6 +30,7 @@
   var OperatorNode = require(path.resolve('./lib/Nodes/OperatorNode.js'));
   var AssignmentNode = require(path.resolve('./lib/Nodes/AssignmentNode.js'));
   var VariableNode = require(path.resolve('./lib/Nodes/VariableNode.js'));
+  var FactorialNode = require(path.resolve('./lib/Nodes/FactorialNode.js'));
 %}
 
 /* operator associations and precedence */
@@ -74,6 +76,8 @@ e
       {$$ = new OperatorNode($2, [$1, $3]);}
     | e '^' e
       {$$ = new OperatorNode($2, [$1, $3]);}
+    | e '!'
+      {$$ = new FactorialNode($2, $1);}
     | '(' e ')'
         {$$ = $2;}
     | 'NUMBER'
