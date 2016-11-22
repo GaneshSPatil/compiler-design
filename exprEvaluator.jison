@@ -2,13 +2,12 @@
 /* description: Parses and executes mathematical expressions. */
 
 /* lexical grammar */
+
 %lex
 %%
-
 \s+                   /* skip whitespace */
-
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
-[a-z]+                return 'VARIABLE'
+[a-z]+                currentLoc = yylloc; return 'VARIABLE'
 "+"                   return '+'
 "-"                   return '-'
 "*"                   return '*'
@@ -25,6 +24,7 @@
 /lex
 %{
   allTrees = [];
+  currentLoc = undefined;
   var path = require('path');
   var NumberNode = require(path.resolve('./lib/Nodes/NumericNode.js'));
   var OperatorNode = require(path.resolve('./lib/Nodes/OperatorNode.js'));
@@ -84,5 +84,5 @@ e
     | 'NUMBER'
         {$$ = new NumberNode(yytext);}
     | 'VARIABLE'
-        {$$ = new VariableNode(yytext);}
+        {$$ = new VariableNode(yytext, currentLoc);}
     ;

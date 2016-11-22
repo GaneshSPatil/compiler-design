@@ -25,8 +25,9 @@ describe('VariableNode', function(){
   });
 
   it('should throw error when its not present in the variables pool', function(){
-    var varA = new VariableNode('a');
-    expect(function(){varA.evaluate({})}).throw('a is not defined');
+    var location = {first_line:1, first_column:0};
+    var varA = new VariableNode('a', location);
+    expect(function(){varA.evaluate({});}).throw('a is not defined. (Location 1:1)');
   });
 
   it('should have string representation of the variable name', function(){
