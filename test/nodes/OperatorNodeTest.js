@@ -1,6 +1,7 @@
 var OperatorNode = require('../../lib/nodes/OperatorNode.js');
 var NumberNode = require('../../lib/nodes/NumericNode.js');
 var VariableNode = require('../../lib/nodes/VariableNode.js');
+var FactorialNode = require('../../lib/nodes/FactorialNode.js');
 var AssignmentNode = require('../../lib/nodes/AssignmentNode.js');
 
 var expect = require('chai').expect;
@@ -49,6 +50,12 @@ describe('OperatorNode', function(){
   it('should evaluate the multiplication expression', function(){
     var expr = new OperatorNode('*', [new NumberNode(1), new NumberNode(2)]);
     expect(expr.evaluate({}).evaluate()).to.eql(2);
+  });
+
+  it('should evaluate complex multiplication expression', function(){
+    var fact = new FactorialNode('!', new NumberNode(5));
+    var expr = new OperatorNode('*', [new NumberNode(2), fact]);
+    expect(expr.evaluate({}).evaluate()).to.eql(240);
   });
 
   it('should evaluate the division expression', function(){
