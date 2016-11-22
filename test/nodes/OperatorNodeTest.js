@@ -94,4 +94,15 @@ describe('OperatorNode', function(){
     var expr = new OperatorNode('*', [new NumberNode('2'), addExpr]);
     expect(expr.represent()).to.eql(['*', 'two', ['+', 'two', 'three']]);
   });
+
+  it('should have JS code representation', function(){
+    var expr = new OperatorNode('*', [new NumberNode(1), new NumberNode(2)]);
+    expect(expr.toJS()).to.eql('(1 * 2)');
+  });
+
+  it('should have JS code representation of complex expressions', function(){
+    var addExpr = new OperatorNode('+', [new NumberNode(2), new NumberNode(3)]);
+    var expr = new OperatorNode('*', [new NumberNode('2'), addExpr]);
+    expect(expr.toJS()).to.eql('(2 * (2 + 3))');
+  });
 });

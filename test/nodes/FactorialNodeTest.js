@@ -35,4 +35,9 @@ describe('FactorialNode', function(){
     var expr = new FactorialNode('!', new VariableNode('a'));
     expect(expr.represent()).to.eql(['a', '!']);
   });
+
+  it('should convert to JS code', function(){
+    var expr = new FactorialNode('!', new VariableNode('a'));
+    expect(expr.toJS()).to.eql('factorial(a)');
+  });
 });

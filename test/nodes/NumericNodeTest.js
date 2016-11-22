@@ -31,4 +31,9 @@ describe('NumericNode', function(){
     var num = new NumericNode(1000000);
     expect(num.represent()).to.equal('one million');
   });
+
+  it('should have JS code representation', function(){
+    var num = new NumericNode(10);
+    expect(num.toJS()).to.equal(10);
+  })
 });

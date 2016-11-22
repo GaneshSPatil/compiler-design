@@ -53,4 +53,16 @@ describe('AssignmentNode', function(){
     var expr = new AssignmentNode('=', ['a', addExpr]);
     expect(expr.represent()).to.eql(['=', 'a', ['+', 'two', 'three']]);
   });
+
+  it('should have javascript code representation', function(){
+    var value = new NumberNode(2);
+    var expr = new AssignmentNode('=', ['a', value]);
+    expect(expr.toJS()).to.eql('var a = 2;');
+  });
+
+  it('should have javascript code representation of variable assignment to another variable', function(){
+    var value = new VariableNode('b');
+    var expr = new AssignmentNode('=', ['a', 'b']);
+    expect(expr.toJS()).to.eql('var a = b;');
+  });
 });

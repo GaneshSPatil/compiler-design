@@ -34,4 +34,8 @@ describe('VariableNode', function(){
     expect(varA.represent()).to.equal('a');
   });
 
+  it('should have JS code representation of the variable name', function(){
+    var varA = new VariableNode('a');
+    expect(varA.toJS()).to.equal('a');
+  });
 });
