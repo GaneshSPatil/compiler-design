@@ -27,6 +27,7 @@
   var NumberNode = require(path.resolve('./lib/Nodes/NumericNode.js'));
   var OperatorNode = require(path.resolve('./lib/Nodes/OperatorNode.js'));
   var AssignmentNode = require(path.resolve('./lib/Nodes/AssignmentNode.js'));
+  var VariableNode = require(path.resolve('./lib/Nodes/VariableNode.js'));
 %}
 
 /* operator associations and precedence */
@@ -73,5 +74,5 @@ e
     | 'NUMBER'
         {$$ = new NumberNode(yytext);}
     | 'VARIABLE'
-        {$$ = yytext;}
+        {$$ = new VariableNode(yytext);}
     ;
