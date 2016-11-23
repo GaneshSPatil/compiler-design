@@ -8,6 +8,7 @@
 \s+                   /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 "if"                  return 'if'
+"else"                return 'else'
 "true"                return 'BOOLEAN'
 "false"               return 'BOOLEAN'
 "+"                   return '+'
@@ -77,9 +78,19 @@ multipleStatements
 
 cond
   : 'if' boolean block
-    {$$ = new IfNode($2, $3.nodes);}
+    {$$ = new IfNode($2, $3.nodes, []);}
+  | 'if' boolean block condElse
+    {$$ = new IfNode($2, $3.nodes, $2);}
+
   | 'if' e block
-    {$$ = new IfNode($2, $3.nodes);}
+    {$$ = new IfNode($2, $3.nodes, []);}
+  | 'if' e block condElse
+    {$$ = new IfNode($2, $3.nodes, $2);}
+  ;
+
+condElse
+  : 'else' block
+    {$$ = $2.nodes;}
   ;
 
 assgn

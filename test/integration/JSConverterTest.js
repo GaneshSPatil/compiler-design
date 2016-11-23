@@ -54,7 +54,7 @@ describe('JS Code Converter', function(){
     var result = treesWalker.walk(trees, 'toJS').join('\n');
     expect(result).to.equal([
       'var a = true;',
-      'if (true){',
+      'if (true) {',
       'var a = 5;',
       '};'
     ].join('\n'));
