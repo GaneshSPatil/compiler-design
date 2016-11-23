@@ -9,6 +9,7 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 "if"                  return 'if'
 "else"                return 'else'
+"elsif"                return 'elsif'
 "true"                return 'BOOLEAN'
 "false"               return 'BOOLEAN'
 "+"                   return '+'
@@ -77,20 +78,23 @@ multipleStatements
   ;
 
 cond
-  : 'if' boolean block
-    {$$ = new IfNode($2, $3.nodes, []);}
-  | 'if' boolean block condElse
-    {$$ = new IfNode($2, $3.nodes, $4);}
+  :IF
+    {$$ = new IfNode($1[0], $1[1].nodes, []);}
+  | IF ELSE
+    {$$ = new IfNode($1[0], $1[1].nodes, $2.nodes);}
 
-  | 'if' e block
-    {$$ = new IfNode($2, $3.nodes, []);}
-  | 'if' e block condElse
-    {$$ = new IfNode($2, $3.nodes, $4);}
   ;
 
-condElse
+IF
+  : 'if' boolean block
+    {$$ = [$2, $3];}
+  | 'if' e block
+    {$$ = [$2, $3];}
+  ;
+
+ELSE
   : 'else' block
-    { $$ = $2.nodes;}
+    { $$ = $2;}
   ;
 
 assgn
