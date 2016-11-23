@@ -1,6 +1,7 @@
 var IfNode = require('../../lib/nodes/IfNode.js');
 var AssignmentNode = require('../../lib/nodes/AssignmentNode.js');
 var NumberNode = require('../../lib/nodes/NumericNode.js');
+var BooleanNode = require('../../lib/nodes/BooleanNode.js');
 
 var expect = require('chai').expect;
 
@@ -31,7 +32,7 @@ describe('IfNode', function(){
 
   it('should convert to JS code', function(){
     var assignment = new AssignmentNode('=', ['a', new NumberNode(2)]);
-    var expr = new IfNode('false', [assignment]);
+    var expr = new IfNode(new BooleanNode('false'), [assignment]);
     expect(expr.toJS()).to.eql([
       'if (false){',
       'var a = 2;',

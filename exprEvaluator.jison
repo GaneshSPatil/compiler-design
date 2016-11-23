@@ -8,8 +8,8 @@
 \s+                   /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 "if"                  return 'if'
-"true"                return 'true'
-"false"                return 'false'
+"true"                return 'BOOLEAN'
+"false"               return 'BOOLEAN'
 "+"                   return '+'
 "-"                   return '-'
 "*"                   return '*'
@@ -76,7 +76,7 @@ multipleStatements
   ;
 
 cond
-  : 'if' 'BOOLEAN' block
+  : 'if' boolean block
     {$$ = new IfNode($2, $3.nodes);}
   ;
 
@@ -124,8 +124,6 @@ e
     ;
 
 boolean
-  : 'true'
-    {$$ = new BooleanNode('true');}
-  | 'false'
-    {$$ = new BooleanNode('false');}
+  : 'BOOLEAN'
+    {$$ = new BooleanNode($1);}
   ;
