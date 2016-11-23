@@ -2,6 +2,7 @@ var AssignmentNode = require('../../lib/nodes/AssignmentNode.js');
 var NumberNode = require('../../lib/nodes/NumericNode.js');
 var VariableNode = require('../../lib/nodes/VariableNode.js');
 var OperatorNode = require('../../lib/nodes/OperatorNode.js');
+var BooleanNode = require('../../lib/nodes/BooleanNode.js');
 
 var expect = require('chai').expect;
 
@@ -23,6 +24,12 @@ describe('AssignmentNode', function(){
 
   it('should evaluate the assignment and return the result', function(){
     var value = new NumberNode(2);
+    var expr = new AssignmentNode('=', ['a', value]);
+    expect(expr.evaluate({})).to.eql(value);
+  });
+
+  it('should evaluate the assignment of boolean and return the result', function(){
+    var value = new BooleanNode('true');
     var expr = new AssignmentNode('=', ['a', value]);
     expect(expr.evaluate({})).to.eql(value);
   });

@@ -8,8 +8,8 @@
 \s+                   /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 "if"                  return 'if'
-"true"                return 'BOOLEAN'
-"false"                return 'BOOLEAN'
+"true"                return 'true'
+"false"                return 'false'
 "+"                   return '+'
 "-"                   return '-'
 "*"                   return '*'
@@ -41,6 +41,7 @@
   var FactorialNode = require(path.resolve('./lib/Nodes/FactorialNode.js'));
   var PowerOfNode = require(path.resolve('./lib/Nodes/PowerOfNode.js'));
   var IfNode = require(path.resolve('./lib/Nodes/IfNode.js'));
+  var BooleanNode = require(path.resolve('./lib/Nodes/BooleanNode.js'));
 %}
 
 /* operator associations and precedence */
@@ -82,6 +83,8 @@ cond
 assgn
   :'VARIABLE' '=' e
     {$$ = new AssignmentNode($2, [$1, $3]);}
+  |'VARIABLE' '=' boolean
+    {$$ = new AssignmentNode($2, [$1, $3]);}
   ;
 
 openBracket
@@ -119,3 +122,10 @@ e
     | 'VARIABLE'
         {$$ = new VariableNode(yytext, currentLoc);}
     ;
+
+boolean
+  : 'true'
+    {$$ = new BooleanNode('true');}
+  | 'false'
+    {$$ = new BooleanNode('false');}
+  ;
