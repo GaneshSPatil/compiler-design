@@ -7,7 +7,8 @@
 %%
 \s+                   /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
-[a-z]+                currentLoc = yylloc; return 'VARIABLE'
+"if"                  return 'if'
+"true"                return 'BOOLEAN'
 "+"                   return '+'
 "-"                   return '-'
 "*"                   return '*'
@@ -16,14 +17,20 @@
 "/"                   return '/'
 "("                   return '('
 ")"                   return ')'
+"{"                   return '{'
+"}"                   return '}'
 ";"                   return ';'
 "="                   return '='
+[a-z]+                currentLoc = yylloc; return 'VARIABLE'
 <<EOF>>               return 'EOF'
 .                     return 'INVALID'
 
 /lex
 %{
-  allTrees = [];
+  allTrees = { nodes:[]};
+  allTrees.previous = allTrees;
+  current = allTrees;
+
   currentLoc = undefined;
   var path = require('path');
   var NumberNode = require(path.resolve('./lib/Nodes/NumericNode.js'));
@@ -45,25 +52,44 @@
 
 %% /* language grammar */
 expressions
-    : block EOF
-        {
-          return $$;
-        }
+    : multipleStatements EOF
+        { return allTrees.nodes; }
     ;
-block
+
+multipleStatements
   : e ';'
-    {allTrees.push($$); $$=allTrees;}
+    {current.nodes.push($$); $$=current;}
   | assgn ';'
-    {allTrees.push($$); $$=allTrees;}
-  | e ';' block
-    { allTrees.unshift($$); $$=$3;}
-  | assgn ';' block
-    { allTrees.unshift($$); $$=$3;}
+    {current.nodes.push($$); $$=current;}
+  | block ';'
+    {current.nodes.unshift($2.nodes); $$=current;}
+
+  | e ';' multipleStatements
+    { current.nodes.unshift($$); $$=$3;}
+  | assgn ';' multipleStatements
+    { current.nodes.unshift($$); $$=$3;}
+  | block ';' multipleStatements
+    { current.nodes.unshift($2.nodes); $$=$5;}
   ;
 
 assgn
   :'VARIABLE' '=' e
     {$$ = new AssignmentNode($2, [$1, $3]);}
+  ;
+
+openBracket
+  : '{'
+    {current = {nodes:[], previous:current}; $$=current; }
+  ;
+
+closeBracket
+  : '}'
+    {current = current.previous; $$=current; }
+  ;
+
+block
+  : openBracket multipleStatements closeBracket
+    {$$ = $2}
   ;
 
 e
