@@ -80,17 +80,17 @@ cond
   : 'if' boolean block
     {$$ = new IfNode($2, $3.nodes, []);}
   | 'if' boolean block condElse
-    {$$ = new IfNode($2, $3.nodes, $2);}
+    {$$ = new IfNode($2, $3.nodes, $4);}
 
   | 'if' e block
     {$$ = new IfNode($2, $3.nodes, []);}
   | 'if' e block condElse
-    {$$ = new IfNode($2, $3.nodes, $2);}
+    {$$ = new IfNode($2, $3.nodes, $4);}
   ;
 
 condElse
   : 'else' block
-    {$$ = $2.nodes;}
+    { $$ = $2.nodes;}
   ;
 
 assgn

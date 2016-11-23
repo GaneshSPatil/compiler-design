@@ -48,7 +48,7 @@ describe('JS Code Converter', function(){
     expect(result).to.equal('var a = Math.pow(2, 2);');
   });
 
-  it('should conevrt conditional expressions', function(){
+  it('should conevrt if expressions', function(){
     var expr = 'a=true;if true { a=5;};'
     var trees = parser.parse(expr);
     var result = treesWalker.walk(trees, 'toJS').join('\n');
@@ -56,6 +56,20 @@ describe('JS Code Converter', function(){
       'var a = true;',
       'if (true) {',
       'var a = 5;',
+      '};'
+    ].join('\n'));
+  });
+
+  it('should conevrt if-else expressions', function(){
+    var expr = 'a=true; if a { a=5;} else {a=10;};'
+    var trees = parser.parse(expr);
+    var result = treesWalker.walk(trees, 'toJS').join('\n');
+    expect(result).to.equal([
+      'var a = true;',
+      'if (a) {',
+      'var a = 5;',
+      '} else {',
+      'var a = 10;',
       '};'
     ].join('\n'));
   });
