@@ -81,7 +81,7 @@ cond
   :IF
     {$$ = new IfNode($1[0], $1[1].nodes, []);}
   | IF ELSE
-    {$$ = new IfNode($1[0], $1[1].nodes, $2.nodes);}
+    {$$ = new IfNode($1[0], $1[1].nodes, $2);}
 
   ;
 
@@ -94,7 +94,9 @@ IF
 
 ELSE
   : 'else' block
-    { $$ = $2;}
+    { $$ = $2.nodes;}
+  | 'elsif' boolean block ELSE
+    {$$ = [new IfNode($2, $3.nodes, $4)];}
   ;
 
 assgn

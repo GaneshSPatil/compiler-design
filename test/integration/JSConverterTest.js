@@ -74,6 +74,46 @@ describe('JS Code Converter', function(){
     ].join('\n'));
   });
 
+  it('should conevrt if-elsif-else expressions', function(){
+    var expr = 'a=true; if a { a=5;} elsif true {a=100;} else {a=10;};'
+    var trees = parser.parse(expr);
+    var result = treesWalker.walk(trees, 'toJS').join('\n');
+    expect(result).to.equal([
+      'var a = true;',
+      'if (a) {',
+          'var a = 5;',
+      '} else {',
+          'if (true) {',
+              'var a = 100;',
+          '} else {',
+              'var a = 10;',
+          '};',
+      '};'
+    ].join('\n'));
+  });
+
+  it('should conevrt multiple elsif expressions', function(){
+    var expr = 'a=true; if a { a=5;} elsif true {a=100;} elsif false {a=6;} else {a=10;};'
+    var trees = parser.parse(expr);
+    var result = treesWalker.walk(trees, 'toJS').join('\n');
+    expect(result).to.equal([
+      'var a = true;',
+      'if (a) {',
+          'var a = 5;',
+      '} else {',
+          'if (true) {',
+              'var a = 100;',
+          '} else {',
+              'if (false) {',
+                  'var a = 6;',
+              '} else {',
+                  'var a = 10;',
+              '};',
+          '};',
+      '};'
+    ].join('\n'));
+  });
+
   it('should convert multiple expressions to js code', function(){
     var expr = '1+2;1+3;'
     var trees = parser.parse(expr);
