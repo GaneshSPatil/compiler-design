@@ -78,6 +78,8 @@ multipleStatements
 cond
   : 'if' boolean block
     {$$ = new IfNode($2, $3.nodes);}
+  | 'if' e block
+    {$$ = new IfNode($2, $3.nodes);}
   ;
 
 assgn

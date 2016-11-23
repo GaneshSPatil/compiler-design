@@ -32,10 +32,10 @@ describe('Evaluate Tree', function(){
   });
 
   it('should evaluate boolean assignment expression', function(){
-    var expr = 'a=true;'
+    var expr = 'a=true; if a { x = 10; };'
     var trees = parser.parse(expr);
     var result = treesWalker.walk(trees, 'evaluate').pop().evaluate();
-    expect(result).to.equal('true');
+    expect(result).to.equal(10);
   });
 
   it('should evaluate recursive assignment expression', function(){
