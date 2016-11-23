@@ -17,6 +17,13 @@ describe('JS Code Converter', function(){
     expect(result).to.equal('var a = (1 + 2);');
   });
 
+  it('should evaluate simple boolean value assignment expression', function(){
+    var expr = 'a=true;'
+    var trees = parser.parse(expr);
+    var result = treesWalker.walk(trees, 'toJS').join('\n');
+    expect(result).to.equal('var a = true;');
+  });
+
   it('should evaluate complex assignment expression', function(){
     var expr = 'a=1+2*3!;'
     var trees = parser.parse(expr);

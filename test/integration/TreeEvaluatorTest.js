@@ -31,6 +31,13 @@ describe('Evaluate Tree', function(){
     expect(result).to.equal(2);
   });
 
+  it('should evaluate boolean assignment expression', function(){
+    var expr = 'a=true;'
+    var trees = parser.parse(expr);
+    var result = treesWalker.walk(trees, 'evaluate').pop().evaluate();
+    expect(result).to.equal('true');
+  });
+
   it('should evaluate recursive assignment expression', function(){
     var expr = 'a=2;b=a;c=b;d=c;'
     var trees = parser.parse(expr);
