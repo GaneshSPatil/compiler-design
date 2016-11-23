@@ -44,14 +44,8 @@ describe('IfNode', function(){
   it('should evaluate falsy predicate', function(){
     var assignment = new AssignmentNode('=', ['a', new NumberNode(2)]);
     var pred = new OperatorNode('-', [new NumberNode(1), new NumberNode(1)]);
-    var expr = new IfNode(pred, [assignment], []);
-    expect(expr.evaluate({}).evaluate()).to.equal(undefined);
-  });
-
-  it('should not evaluate the block if predicate is false expression', function(){
-    var assignment = new AssignmentNode('=', ['a', new NumberNode(2)]);
-    var expr = new IfNode(new BooleanNode('false'), [assignment], []);
-    expect(expr.evaluate({}).evaluate()).to.equal(undefined);
+    var expr = new IfNode(pred, [], [assignment]);
+    expect(expr.evaluate({}).evaluate()).to.equal(2);
   });
 
   it('should convert to JS code', function(){
