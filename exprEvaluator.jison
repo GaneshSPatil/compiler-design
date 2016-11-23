@@ -9,6 +9,7 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 "if"                  return 'if'
 "true"                return 'BOOLEAN'
+"false"                return 'BOOLEAN'
 "+"                   return '+'
 "-"                   return '-'
 "*"                   return '*'
@@ -39,6 +40,7 @@
   var VariableNode = require(path.resolve('./lib/Nodes/VariableNode.js'));
   var FactorialNode = require(path.resolve('./lib/Nodes/FactorialNode.js'));
   var PowerOfNode = require(path.resolve('./lib/Nodes/PowerOfNode.js'));
+  var IfNode = require(path.resolve('./lib/Nodes/IfNode.js'));
 %}
 
 /* operator associations and precedence */
@@ -61,15 +63,20 @@ multipleStatements
     {current.nodes.push($$); $$=current;}
   | assgn ';'
     {current.nodes.push($$); $$=current;}
-  | block ';'
-    {current.nodes.unshift($2.nodes); $$=current;}
+  | cond ';'
+    {current.nodes.unshift($$); $$=current;}
 
   | e ';' multipleStatements
     { current.nodes.unshift($$); $$=$3;}
   | assgn ';' multipleStatements
     { current.nodes.unshift($$); $$=$3;}
-  | block ';' multipleStatements
-    { current.nodes.unshift($2.nodes); $$=$5;}
+  | cond ';' multipleStatements
+    { current.nodes.unshift($$); $$=$3;}
+  ;
+
+cond
+  : 'if' 'BOOLEAN' block
+    {$$ = new IfNode($2, $3.nodes);}
   ;
 
 assgn

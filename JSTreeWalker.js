@@ -20,7 +20,7 @@ var walk = function(trees, key){
         resultHolder.unshift(factFn);
       }
     }
-    if(tree.type != 'Assignment'){
+    if(tree.type != 'Conditional' && tree.type != 'Assignment'){
       value = 'console.log('+value+');'
     }
     resultHolder.push(value);
