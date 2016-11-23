@@ -21,13 +21,17 @@ describe('VariableNode', function(){
 
   it('should evaluate and return the value of itself from variables pool', function(){
     var varA = new VariableNode('a');
-    expect(varA.evaluate({'a' : new NumericNode(2)}).evaluate()).to.equal(2);
+    var variables = {list:{'a' : new NumericNode(2)}};
+    variables.parent = variables;
+    expect(varA.evaluate(variables).evaluate()).to.equal(2);
   });
 
   it('should throw error when its not present in the variables pool', function(){
     var location = {first_line:1, first_column:0};
     var varA = new VariableNode('a', location);
-    expect(function(){varA.evaluate({});}).throw('a is not defined. (Location 1:1)');
+    var variables = {list:{}};
+    variables.parent = variables;
+    expect(function(){varA.evaluate(variables);}).throw('a is not defined. (Location 1:1)');
   });
 
   it('should have string representation of the variable name', function(){

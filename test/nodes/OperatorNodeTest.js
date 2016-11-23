@@ -69,14 +69,18 @@ describe('OperatorNode', function(){
   });
 
   it('should look up for a variable in variable pool', function(){
+    var variables = {list:{'a' : new NumberNode(1)}};
+    variables.parent = variables;
     var expr = new OperatorNode('+', ['a', new NumberNode(2)]);
-    expect(expr.evaluate({'a' : new NumberNode(1)}).evaluate()).to.equal(3);
+    expect(expr.evaluate(variables).evaluate()).to.equal(3);
   });
 
   it('should throw error when the variable does not exist in variable pool', function(){
     var location = {first_line:1, first_column:0};
+    var variables = {list:{}};
+    variables.parent = variables;
     var expr = new OperatorNode('+', [new VariableNode('a', location), new NumberNode(2)]);
-    expect(function(){expr.evaluate({});}).throw('a is not defined. (Location 1:1)');
+    expect(function(){expr.evaluate(variables);}).throw('a is not defined. (Location 1:1)');
   });
 
   it('should evaluate complex expressions', function(){

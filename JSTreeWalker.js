@@ -10,8 +10,11 @@ var isFactorial = function(node){
   });
 };
 
-var walk = function(trees, key){
+var walk = function(trees, key, parent){
   var variables = {};
+  variables.list = {};
+  variables.parent = parent || variables;
+
   var result = trees.reduce(function(resultHolder, tree){
     var value = tree[key](variables);
     if(isFactorial(tree)){

@@ -26,10 +26,12 @@ describe('IfNode', function(){
   });
 
   it('should evaluate the predicate value', function(){
+    var variables = {list:{'a' : new NumberNode(2)}};
+    variables.parent = variables;
     var assignment = new AssignmentNode('=', ['a', new NumberNode(2)]);
     var pred = new AssignmentNode('=', ['foo', new BooleanNode('true')]);
     var expr = new IfNode(pred, [assignment]);
-    expect(expr.evaluate({}).evaluate()).to.equal(2);
+    expect(expr.evaluate(variables).evaluate()).to.equal(2);
   });
 
   it('should evaluate truthy predicate', function(){

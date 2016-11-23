@@ -23,30 +23,37 @@ describe('AssignmentNode', function(){
   });
 
   it('should evaluate the assignment and return the result', function(){
+    var variables = {list:{}};
+    variables.parent = variables;
     var value = new NumberNode(2);
     var expr = new AssignmentNode('=', ['a', value]);
-    expect(expr.evaluate({})).to.eql(value);
+    expect(expr.evaluate(variables)).to.eql(value);
   });
 
   it('should evaluate the assignment of boolean and return the result', function(){
+    var variables = {list:{}};
+    variables.parent = variables;
     var value = new BooleanNode('true');
     var expr = new AssignmentNode('=', ['a', value]);
-    expect(expr.evaluate({})).to.eql(value);
+    expect(expr.evaluate(variables)).to.eql(value);
   });
 
   it('should populate the variables collection with newly assigned variable', function(){
-    var variables = {};
+    var variables = {list:{}};
+    variables.parent = variables;
     var value = new NumberNode(2);
-    expect(variables.a).to.equal(undefined);
+    expect(variables.list.a).to.equal(undefined);
     var expr = new AssignmentNode('=', ['a', value]);
     expr.evaluate(variables);
-    expect(variables.a).to.equal(value);
+    expect(variables.list.a).to.equal(value);
   });
 
   it('should evaluate assignment operations with values as complex expressions', function(){
+    var variables = {list:{}};
+    variables.parent = variables;
     var addExpr = new OperatorNode('+', [new NumberNode(2), new NumberNode(3)]);
     var expr = new AssignmentNode('=', ['a', addExpr]);
-    expect(expr.evaluate({}).evaluate()).to.eql(5);
+    expect(expr.evaluate(variables).evaluate()).to.eql(5);
   });
 
   it('should represent simple assignment expressions', function(){

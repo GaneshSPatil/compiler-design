@@ -23,13 +23,15 @@ describe('FactorialNode', function(){
 
   it('should look up for a variable in variable pool', function(){
     var expr = new FactorialNode('!', new VariableNode('a'));
-    expect(expr.evaluate({'a' : new NumberNode(3)}).evaluate()).to.equal(6);
+    expect(expr.evaluate({list:{'a' : new NumberNode(3)}}).evaluate()).to.equal(6);
   });
 
   it('should throw error when the variable does not exist in variable pool', function(){
     var location = {first_line:1, first_column:0};
     var expr = new FactorialNode('!', new VariableNode('a', location));
-    expect(function(){expr.evaluate({});}).throw('a is not defined. (Location 1:1)');
+    var variables = {list:{}};
+    variables.parent = variables;
+    expect(function(){expr.evaluate(variables);}).throw('a is not defined. (Location 1:1)');
   });
 
   it('should represent factorial expressions', function(){
