@@ -37,7 +37,7 @@
   currentLoc = undefined;
   var path = require('path');
   var NumberNode = require(path.resolve('./lib/Nodes/NumericNode.js'));
-  var OperatorNode = require(path.resolve('./lib/Nodes/OperatorNode.js'));
+  var ArithmeticOperatorNode = require(path.resolve('./lib/Nodes/ArithmeticOperatorNode.js'));
   var AssignmentNode = require(path.resolve('./lib/Nodes/AssignmentNode.js'));
   var VariableNode = require(path.resolve('./lib/Nodes/VariableNode.js'));
   var FactorialNode = require(path.resolve('./lib/Nodes/FactorialNode.js'));
@@ -123,13 +123,13 @@ block
 
 e
     : e '/' e
-      {$$ = new OperatorNode($2, [$1, $3]);}
+      {$$ = new ArithmeticOperatorNode($2, [$1, $3]);}
     | e '+' e
-      {$$ = new OperatorNode($2, [$1, $3]);}
+      {$$ = new ArithmeticOperatorNode($2, [$1, $3]);}
     | e '-' e
-      {$$ = new OperatorNode($2, [$1, $3]);}
+      {$$ = new ArithmeticOperatorNode($2, [$1, $3]);}
     | e '*' e
-      {$$ = new OperatorNode($2, [$1, $3]);}
+      {$$ = new ArithmeticOperatorNode($2, [$1, $3]);}
     | e '^' e
       {$$ = new PowerOfNode($2, [$1, $3]);}
     | e '!'

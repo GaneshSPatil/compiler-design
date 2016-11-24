@@ -1,6 +1,6 @@
 var IfNode = require('../../lib/nodes/IfNode.js');
 var AssignmentNode = require('../../lib/nodes/AssignmentNode.js');
-var OperatorNode = require('../../lib/nodes/OperatorNode.js');
+var ArithmeticOperatorNode = require('../../lib/nodes/ArithmeticOperatorNode.js');
 var NumberNode = require('../../lib/nodes/NumericNode.js');
 var BooleanNode = require('../../lib/nodes/BooleanNode.js');
 
@@ -36,14 +36,14 @@ describe('IfNode', function(){
 
   it('should evaluate truthy predicate', function(){
     var assignment = new AssignmentNode('=', ['a', new NumberNode(2)]);
-    var pred = new OperatorNode('+', [new NumberNode(1), new NumberNode(2)]);
+    var pred = new ArithmeticOperatorNode('+', [new NumberNode(1), new NumberNode(2)]);
     var expr = new IfNode(pred, [assignment], []);
     expect(expr.evaluate({}).evaluate()).to.equal(2);
   });
 
   it('should evaluate falsy predicate', function(){
     var assignment = new AssignmentNode('=', ['a', new NumberNode(2)]);
-    var pred = new OperatorNode('-', [new NumberNode(1), new NumberNode(1)]);
+    var pred = new ArithmeticOperatorNode('-', [new NumberNode(1), new NumberNode(1)]);
     var expr = new IfNode(pred, [], [assignment]);
     expect(expr.evaluate({}).evaluate()).to.equal(2);
   });
@@ -60,7 +60,7 @@ describe('IfNode', function(){
 
   it('should evaluate else block if the predicate is false', function(){
     var assignment = new AssignmentNode('=', ['a', new NumberNode(2)]);
-    var pred = new OperatorNode('-', [new NumberNode(1), new NumberNode(1)]);
+    var pred = new ArithmeticOperatorNode('-', [new NumberNode(1), new NumberNode(1)]);
     var expr = new IfNode(pred, [], [assignment]);
     expect(expr.evaluate({}).evaluate()).to.equal(2);
   });

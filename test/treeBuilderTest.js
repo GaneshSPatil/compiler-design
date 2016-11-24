@@ -1,4 +1,4 @@
-var OperatorNode = require('../lib/nodes/OperatorNode.js');
+var ArithmeticOperatorNode = require('../lib/nodes/ArithmeticOperatorNode.js');
 var NumberNode = require('../lib/nodes/NumericNode.js');
 var VariableNode = require('../lib/nodes/VariableNode.js');
 var AssignmentNode = require('../lib/nodes/AssignmentNode.js');
@@ -28,7 +28,7 @@ describe('Build Tree', function(){
 
     var op1 = new NumberNode(1);
     var op2 = new NumberNode(2);
-    var expectedTree = [ new OperatorNode('+', [ op1, op2]) ];
+    var expectedTree = [ new ArithmeticOperatorNode('+', [ op1, op2]) ];
     compare(actualTree, expectedTree);
   });
 
@@ -47,10 +47,10 @@ describe('Build Tree', function(){
     var four = new NumberNode(4);
     var five = new NumberNode(5);
     var three = new NumberNode(3);
-    var multiply = new OperatorNode('*', [three, four]);
-    var add = new OperatorNode('+', [two, multiply]);
+    var multiply = new ArithmeticOperatorNode('*', [three, four]);
+    var add = new ArithmeticOperatorNode('+', [two, multiply]);
 
-    var expectedTree = [ new OperatorNode('+', [five, add]) ];
+    var expectedTree = [ new ArithmeticOperatorNode('+', [five, add]) ];
     compare(actualTree, expectedTree);
   });
 
@@ -58,7 +58,7 @@ describe('Build Tree', function(){
     var expr = '1+2;b=2;';
     var actualTree = parser.parse(expr);
     var expectedTree = [
-      new OperatorNode('+', [new NumberNode(1), new NumberNode(2)]),
+      new ArithmeticOperatorNode('+', [new NumberNode(1), new NumberNode(2)]),
       new AssignmentNode('=', ['b', new NumberNode(2)])
     ];
     compare(actualTree, expectedTree);

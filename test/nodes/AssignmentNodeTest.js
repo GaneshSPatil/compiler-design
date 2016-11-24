@@ -1,7 +1,7 @@
 var AssignmentNode = require('../../lib/nodes/AssignmentNode.js');
 var NumberNode = require('../../lib/nodes/NumericNode.js');
 var VariableNode = require('../../lib/nodes/VariableNode.js');
-var OperatorNode = require('../../lib/nodes/OperatorNode.js');
+var ArithmeticOperatorNode = require('../../lib/nodes/ArithmeticOperatorNode.js');
 var BooleanNode = require('../../lib/nodes/BooleanNode.js');
 
 var expect = require('chai').expect;
@@ -51,7 +51,7 @@ describe('AssignmentNode', function(){
   it('should evaluate assignment operations with values as complex expressions', function(){
     var variables = {list:{}};
     variables.parent = variables;
-    var addExpr = new OperatorNode('+', [new NumberNode(2), new NumberNode(3)]);
+    var addExpr = new ArithmeticOperatorNode('+', [new NumberNode(2), new NumberNode(3)]);
     var expr = new AssignmentNode('=', ['a', addExpr]);
     expect(expr.evaluate(variables).evaluate()).to.eql(5);
   });
@@ -63,7 +63,7 @@ describe('AssignmentNode', function(){
   });
 
   it('should represent complex assignment expressions', function(){
-    var addExpr = new OperatorNode('+', [new NumberNode(2), new NumberNode(3)]);
+    var addExpr = new ArithmeticOperatorNode('+', [new NumberNode(2), new NumberNode(3)]);
     var expr = new AssignmentNode('=', ['a', addExpr]);
     expect(expr.represent()).to.eql(['=', 'a', ['+', 'two', 'three']]);
   });
