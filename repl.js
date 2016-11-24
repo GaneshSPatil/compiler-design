@@ -21,7 +21,7 @@ var onAnswer = function(ans){
     console.log(result[result.length - 1].evaluate());
   }catch(e){
     (trees != undefined) && trees.pop();
-    console.log(e.stack || e.message);
+    console.error(e.stack || e.message);
   }
   askQue();
 }
