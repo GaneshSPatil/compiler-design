@@ -20,7 +20,7 @@ var onAnswer = function(ans){
   try{
     var trees = new Parser(grammar).parse(ans);
     var result = treesWalker.walk(trees, 'evaluate', variables);
-    console.log(result[result.length - 1].evaluate());
+    result.forEach(function(r){ console.log(r.evaluate()); });
   }catch(e){
     (trees != undefined) && trees.pop();
     console.error(e.stack || e.message);
