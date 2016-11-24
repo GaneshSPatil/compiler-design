@@ -20,9 +20,11 @@ describe('IfNode', function(){
   });
 
   it('should evaluate the block if predicate is true expression', function(){
+    var variables = {list:{}};
+    variables.parent = variables;
     var assignment = new AssignmentNode('=', ['a', new NumberNode(2)]);
     var expr = new IfNode(new BooleanNode('true'), [assignment], []);
-    expect(expr.evaluate({}).evaluate()).to.equal(2);
+    expect(expr.evaluate(variables).evaluate()).to.equal(2);
   });
 
   it('should evaluate the predicate value', function(){
@@ -35,17 +37,21 @@ describe('IfNode', function(){
   });
 
   it('should evaluate truthy predicate', function(){
+    var variables = {list:{}};
+    variables.parent = variables;
     var assignment = new AssignmentNode('=', ['a', new NumberNode(2)]);
     var pred = new ArithmeticOperatorNode('+', [new NumberNode(1), new NumberNode(2)]);
     var expr = new IfNode(pred, [assignment], []);
-    expect(expr.evaluate({}).evaluate()).to.equal(2);
+    expect(expr.evaluate(variables).evaluate()).to.equal(2);
   });
 
   it('should evaluate falsy predicate', function(){
+    var variables = {list:{}};
+    variables.parent = variables;
     var assignment = new AssignmentNode('=', ['a', new NumberNode(2)]);
     var pred = new ArithmeticOperatorNode('-', [new NumberNode(1), new NumberNode(1)]);
     var expr = new IfNode(pred, [], [assignment]);
-    expect(expr.evaluate({}).evaluate()).to.equal(2);
+    expect(expr.evaluate(variables).evaluate()).to.equal(2);
   });
 
   it('should convert to JS code', function(){
@@ -59,10 +65,12 @@ describe('IfNode', function(){
   });
 
   it('should evaluate else block if the predicate is false', function(){
+    var variables = {list:{}};
+    variables.parent = variables;
     var assignment = new AssignmentNode('=', ['a', new NumberNode(2)]);
     var pred = new ArithmeticOperatorNode('-', [new NumberNode(1), new NumberNode(1)]);
     var expr = new IfNode(pred, [], [assignment]);
-    expect(expr.evaluate({}).evaluate()).to.equal(2);
+    expect(expr.evaluate(variables).evaluate()).to.equal(2);
   });
 
   it('should convert to if-else block to JS code', function(){
