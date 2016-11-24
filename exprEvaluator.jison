@@ -9,7 +9,8 @@
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
 "if"                  return 'if'
 "else"                return 'else'
-"elsif"                return 'elsif'
+"elsif"               return 'elsif'
+"while"               return 'while'
 "true"                return 'BOOLEAN'
 "false"               return 'BOOLEAN'
 "+"                   return '+'
@@ -47,6 +48,7 @@
   var PowerOfNode = require(path.resolve('./lib/nodes/PowerOfNode.js'));
   var IfNode = require(path.resolve('./lib/nodes/IfNode.js'));
   var BooleanNode = require(path.resolve('./lib/nodes/BooleanNode.js'));
+  var WhileNode = require(path.resolve('./lib/nodes/WhileNode.js'));
 %}
 
 /* operator associations and precedence */
@@ -87,7 +89,15 @@ cond
     {$$ = new IfNode($1[0], $1[1].nodes, []);}
   | IF ELSE
     {$$ = new IfNode($1[0], $1[1].nodes, $2);}
+  | WHILE
+    {$$ = $1}
+  ;
 
+WHILE
+  : 'while' boolean block
+    { $$ = new WhileNode($2, $3.nodes);}
+  | 'while' e block
+    { $$ = new WhileNode($2, $3.nodes);}
   ;
 
 IF

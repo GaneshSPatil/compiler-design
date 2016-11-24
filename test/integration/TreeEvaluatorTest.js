@@ -131,12 +131,33 @@ describe('Evaluate Tree', function(){
   });
 
   it('should modify the variable value of global scope', function(){
-    var expr = 'a=2; if true {a=20;}; a;'
+    var expr = 'a=2; if true {a=a+2;}; a;'
     var trees = parser.parse(expr);
     var variables = {};
     variables.list = {};
     variables.parent = variables;
     var result = treesWalker.walk(trees, 'evaluate', variables).pop().evaluate();
-    expect(result).to.equal(20);
+    expect(result).to.equal(4);
   });
+
+  it('should evaluate while loop', function(){
+    var expr = 'a=2; while a<5 {a=a+1;}; a;'
+    var trees = parser.parse(expr);
+    var variables = {};
+    variables.list = {};
+    variables.parent = variables;
+    var result = treesWalker.walk(trees, 'evaluate', variables).pop().evaluate();
+    expect(result).to.equal(5);
+  });
+
+  it('should not  evaluate while loop when predicate is false', function(){
+    var expr = 'a=2; while false {a=a+1;}; a;'
+    var trees = parser.parse(expr);
+    var variables = {};
+    variables.list = {};
+    variables.parent = variables;
+    var result = treesWalker.walk(trees, 'evaluate', variables).pop().evaluate();
+    expect(result).to.equal(2);
+  });
+
 });

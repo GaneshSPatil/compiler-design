@@ -1,5 +1,8 @@
 a=10;
 
-if false {
-x=20;
+while a<20 {
+  a=a+1;
+  a;
 };
+
+a;

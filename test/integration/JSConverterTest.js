@@ -134,4 +134,16 @@ describe('JS Code Converter', function(){
     ].join('\n'));
   });
 
+  it('should convert while loop', function(){
+    var expr = 'a=1; while a<5 { a=a+1;}; a;'
+    var trees = parser.parse(expr);
+    var result = treesWalker.walk(trees, 'toJS').join('\n');
+    expect(result).to.equal([
+      'var a = 1;',
+      'while ((a < 5)) {',
+      'var a = (a + 1);',
+      '};',
+      'console.log(a);'
+    ].join('\n'));
+  });
 });
