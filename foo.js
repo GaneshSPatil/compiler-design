@@ -9,7 +9,12 @@ var grammar = fs.readFileSync('./exprEvaluator.jison', 'utf8');
 var parser = new Parser(grammar);
 var trees = parser.parse(fs.readFileSync(process.argv[2], 'utf8'));
 
-var result = treesWalker.walk(trees, 'evaluate');
+
+var variables = {};
+variables.list = {};
+variables.parent = variables;
+
+var result = treesWalker.walk(trees, 'evaluate', variables);
 
 console.log('------- EVALUATE TREE ----------');
 console.log(result[result.length - 1].evaluate());
