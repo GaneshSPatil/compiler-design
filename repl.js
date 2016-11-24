@@ -13,11 +13,15 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+var variables = {};
+variables.list = {};
+variables.parent = variables;
+
 var onAnswer = function(ans){
   var trees = undefined;
   try{
     trees = parser.parse(ans);
-    result = treesWalker.walk(trees, 'evaluate');
+    result = treesWalker.walk(trees, 'evaluate', variables);
     console.log(result[result.length - 1].evaluate());
   }catch(e){
     (trees != undefined) && trees.pop();

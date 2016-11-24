@@ -1,7 +1,5 @@
 var walk = function(trees, key, parent){
-  var variables = {};
-  variables.list = {};
-  variables.parent = parent || variables;
+  var variables = parent;
   var result = trees.reduce(function(resultHolder, tree){
     var value = tree[key](variables);
     resultHolder.push(value);
