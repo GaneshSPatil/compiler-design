@@ -129,4 +129,14 @@ describe('Evaluate Tree', function(){
     var result = treesWalker.walk(trees, 'evaluate', variables).pop().evaluate();
     expect(result).to.equal(10);
   });
+
+  it('should modify the variable value of global scope', function(){
+    var expr = 'a=2; if true {a=20;}; a;'
+    var trees = parser.parse(expr);
+    var variables = {};
+    variables.list = {};
+    variables.parent = variables;
+    var result = treesWalker.walk(trees, 'evaluate', variables).pop().evaluate();
+    expect(result).to.equal(20);
+  });
 });
