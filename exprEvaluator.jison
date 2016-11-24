@@ -39,14 +39,14 @@
 
   currentLoc = undefined;
   var path = require('path');
-  var NumberNode = require(path.resolve('./lib/Nodes/NumericNode.js'));
-  var ArithmeticOperatorNode = require(path.resolve('./lib/Nodes/ArithmeticOperatorNode.js'));
-  var AssignmentNode = require(path.resolve('./lib/Nodes/AssignmentNode.js'));
-  var VariableNode = require(path.resolve('./lib/Nodes/VariableNode.js'));
-  var FactorialNode = require(path.resolve('./lib/Nodes/FactorialNode.js'));
-  var PowerOfNode = require(path.resolve('./lib/Nodes/PowerOfNode.js'));
-  var IfNode = require(path.resolve('./lib/Nodes/IfNode.js'));
-  var BooleanNode = require(path.resolve('./lib/Nodes/BooleanNode.js'));
+  var NumberNode = require(path.resolve('./lib/nodes/NumericNode.js'));
+  var ArithmeticOperatorNode = require(path.resolve('./lib/nodes/ArithmeticOperatorNode.js'));
+  var AssignmentNode = require(path.resolve('./lib/nodes/AssignmentNode.js'));
+  var VariableNode = require(path.resolve('./lib/nodes/VariableNode.js'));
+  var FactorialNode = require(path.resolve('./lib/nodes/FactorialNode.js'));
+  var PowerOfNode = require(path.resolve('./lib/nodes/PowerOfNode.js'));
+  var IfNode = require(path.resolve('./lib/nodes/IfNode.js'));
+  var BooleanNode = require(path.resolve('./lib/nodes/BooleanNode.js'));
 %}
 
 /* operator associations and precedence */
