@@ -18,10 +18,13 @@
 "^"                   return '^'
 "!"                   return '!'
 "/"                   return '/'
+"%"                   return '%'
 "("                   return '('
 ")"                   return ')'
 "{"                   return '{'
 "}"                   return '}'
+"<"                   return '<'
+">"                   return '>'
 ";"                   return ';'
 "="                   return '='
 [a-z]+                currentLoc = yylloc; return 'VARIABLE'
@@ -48,7 +51,9 @@
 
 /* operator associations and precedence */
 
+%left '>' '<'
 %left '+' '-'
+%left '%'
 %left '*' '/'
 %left '^'
 %left '!'
@@ -132,6 +137,12 @@ e
       {$$ = new ArithmeticOperatorNode($2, [$1, $3]);}
     | e '^' e
       {$$ = new PowerOfNode($2, [$1, $3]);}
+    | e '%' e
+      {$$ = new ArithmeticOperatorNode($2, [$1, $3]);}
+    | e '>' e
+      {$$ = new ArithmeticOperatorNode($2, [$1, $3]);}
+    | e '<' e
+      {$$ = new ArithmeticOperatorNode($2, [$1, $3]);}
     | e '!'
       {$$ = new FactorialNode($2, $1);}
     | '(' e ')'

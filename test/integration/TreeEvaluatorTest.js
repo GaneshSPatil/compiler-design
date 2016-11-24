@@ -17,6 +17,13 @@ describe('Evaluate Tree', function(){
     expect(result).to.equal(3);
   });
 
+  it('should evaluate an expression which evaluates to boolean', function(){
+    var expr = 'a=2>3;'
+    var trees = parser.parse(expr);
+    var result = treesWalker.walk(trees, 'evaluate').pop().evaluate();
+    expect(result).to.equal(false);
+  });
+
   it('should evaluate complex evaluation expression', function(){
     var expr = '1+2^2*3!;'
     var trees = parser.parse(expr);

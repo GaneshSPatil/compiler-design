@@ -32,6 +32,21 @@ describe('ArithmeticOperatorNode', function(){
     expect(expr.value).to.equal('^');
   });
 
+  it('should have modulo operator as value', function(){
+    var expr = new ArithmeticOperatorNode('%', [new NumberNode(1), new NumberNode(2)]);
+    expect(expr.value).to.equal('%');
+  });
+
+  it('should have greater than operator as value', function(){
+    var expr = new ArithmeticOperatorNode('<', [new NumberNode(1), new NumberNode(2)]);
+    expect(expr.value).to.equal('<');
+  });
+
+  it('should have less than operator as value', function(){
+    var expr = new ArithmeticOperatorNode('>', [new NumberNode(1), new NumberNode(2)]);
+    expect(expr.value).to.equal('>');
+  });
+
   it('should have Operation as type', function(){
     var expr = new ArithmeticOperatorNode('+', [new NumberNode(1), new NumberNode(2)]);
     expect(expr.type).to.equal('Operation');
@@ -50,6 +65,21 @@ describe('ArithmeticOperatorNode', function(){
   it('should evaluate the multiplication expression', function(){
     var expr = new ArithmeticOperatorNode('*', [new NumberNode(1), new NumberNode(2)]);
     expect(expr.evaluate({}).evaluate()).to.eql(2);
+  });
+
+  it('should evaluate the modulo expression', function(){
+    var expr = new ArithmeticOperatorNode('%', [new NumberNode(1), new NumberNode(2)]);
+    expect(expr.evaluate({}).evaluate()).to.eql(1);
+  });
+
+  it('should evaluate the greater than expression', function(){
+    var expr = new ArithmeticOperatorNode('>', [new NumberNode(1), new NumberNode(2)]);
+    expect(expr.evaluate({}).evaluate()).to.eql(false);
+  });
+
+  it('should evaluate the less than expression', function(){
+    var expr = new ArithmeticOperatorNode('<', [new NumberNode(3), new NumberNode(2)]);
+    expect(expr.evaluate({}).evaluate()).to.eql(false);
   });
 
   it('should evaluate complex multiplication expression', function(){

@@ -61,11 +61,11 @@ describe('JS Code Converter', function(){
   });
 
   it('should conevrt if-else expressions', function(){
-    var expr = 'a=true; if a { a=5;} else {a=10;};'
+    var expr = 'a=2>3; if a { a=5;} else {a=10;};'
     var trees = parser.parse(expr);
     var result = treesWalker.walk(trees, 'toJS').join('\n');
     expect(result).to.equal([
-      'var a = true;',
+      'var a = (2 > 3);',
       'if (a) {',
       'var a = 5;',
       '} else {',
