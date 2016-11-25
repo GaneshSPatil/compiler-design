@@ -11,6 +11,7 @@
 "else"                return 'else'
 "elsif"               return 'elsif'
 "while"               return 'while'
+"function"            return 'function'
 "true"                return 'BOOLEAN'
 "false"               return 'BOOLEAN'
 "+"                   return '+'
@@ -21,6 +22,7 @@
 "/"                   return '/'
 "%"                   return '%'
 "("                   return '('
+","                   return ','
 ")"                   return ')'
 "{"                   return '{'
 "}"                   return '}'
@@ -49,6 +51,7 @@
   var IfNode = require(path.resolve('./lib/nodes/IfNode.js'));
   var BooleanNode = require(path.resolve('./lib/nodes/BooleanNode.js'));
   var WhileNode = require(path.resolve('./lib/nodes/WhileNode.js'));
+  var FunctionBlock = require(path.resolve('./lib/nodes/FunctionBlock.js'));
 %}
 
 /* operator associations and precedence */
@@ -91,6 +94,27 @@ cond
     {$$ = new IfNode($1[0], $1[1].nodes, $2);}
   | WHILE
     {$$ = $1}
+  | FUNCTION
+    {$$ = $1}
+  ;
+
+FUNCTION
+  : 'function' 'VARIABLE' PARAMS block
+    {$$ = new FunctionBlock(new VariableNode($2, currentLoc), $3, $4.nodes)}
+  ;
+
+PARAMS
+  : '(' ')'
+    {$$ = []}
+  | '(' 'COMMA-SEPERATED-VARIABLES' ')'
+    {$$ = $2;}
+  ;
+
+COMMA-SEPERATED-VARIABLES
+  : 'VARIABLE'
+    {$$ = [new VariableNode($1, currentLoc)]}
+  | VARIABLE ',' COMMA-SEPERATED-VARIABLES
+    {$$ = [new VariableNode($1, currentLoc)].concat($3);}
   ;
 
 WHILE

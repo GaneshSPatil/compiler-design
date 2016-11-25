@@ -23,7 +23,8 @@ var walk = function(trees, key, parent){
         resultHolder.unshift(factFn);
       }
     }
-    if(tree.type != 'Conditional' && tree.type != 'Assignment' && tree.type != 'Loop'){
+    if(tree.type != 'Conditional' && tree.type != 'Assignment'
+    && tree.type != 'Loop' && tree.type != 'Function'){
       value = 'console.log('+value+');'
     }
     resultHolder.push(value);
