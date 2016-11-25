@@ -24,7 +24,7 @@ var walk = function(trees, key, parent){
       }
     }
     if(tree.type != 'Conditional' && tree.type != 'Assignment'
-    && tree.type != 'Loop' && tree.type != 'Function'){
+    && tree.type != 'Loop' && tree.type != 'Function' && tree.type != 'FunctionCall' ){
       value = 'console.log('+value+');'
     }
     resultHolder.push(value);

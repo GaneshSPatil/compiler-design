@@ -12,6 +12,7 @@ var trees = parser.parse(fs.readFileSync(process.argv[2], 'utf8'));
 
 var variables = {};
 variables.list = {};
+variables.allFunctions = {};
 variables.parent = variables;
 
 var result = treesWalker.walk(trees, 'evaluate', variables);

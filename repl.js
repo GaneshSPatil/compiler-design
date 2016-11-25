@@ -14,6 +14,7 @@ const rl = readline.createInterface({
 
 var variables = {};
 variables.list = {};
+variables.allFunctions = {};
 variables.parent = variables;
 
 var onAnswer = function(ans){

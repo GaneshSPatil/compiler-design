@@ -52,6 +52,7 @@
   var BooleanNode = require(path.resolve('./lib/nodes/BooleanNode.js'));
   var WhileNode = require(path.resolve('./lib/nodes/WhileNode.js'));
   var FunctionBlock = require(path.resolve('./lib/nodes/FunctionBlock.js'));
+  var FunctionCallBlock = require(path.resolve('./lib/nodes/FunctionCallBlock.js'));
 %}
 
 /* operator associations and precedence */
@@ -96,12 +97,26 @@ cond
     {$$ = $1}
   | FUNCTION
     {$$ = $1}
+  | FUNCTION-CALL
   ;
 
 FUNCTION
   : 'function' 'VARIABLE' PARAMS block
     {$$ = new FunctionBlock(new VariableNode($2, currentLoc), $3, $4.nodes)}
   ;
+
+FUNCTION-CALL
+  : 'VARIABLE' FN-PARAMS
+    {$$ = new FunctionCallBlock(new VariableNode($1, currentLoc), $2)}
+  ;
+
+FN-PARAMS
+  : '(' ')'
+    {$$ = []}
+  | '(' 'COMMA-SEPERATED-VALUES' ')'
+    {$$ = $2;}
+  ;
+
 
 PARAMS
   : '(' ')'
@@ -115,6 +130,13 @@ COMMA-SEPERATED-VARIABLES
     {$$ = [new VariableNode($1, currentLoc)]}
   | VARIABLE ',' COMMA-SEPERATED-VARIABLES
     {$$ = [new VariableNode($1, currentLoc)].concat($3);}
+  ;
+
+COMMA-SEPERATED-VALUES
+  : e
+    {$$ = [$1]}
+  | e ',' COMMA-SEPERATED-VALUES
+    {$$ = [$1].concat($3);}
   ;
 
 WHILE
